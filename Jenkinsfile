@@ -13,20 +13,20 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/nguyencuong30697/todolist_cicd.git'
             }
         }
-        // stage('Install Lib stage') {
-        //     steps {
-        //         sh 'npm i'
-        //     }
-        // }
-        // stage('Test stage') {
-        //     steps {
-        //         sh 'npm test'
-        //     }
-        // }
+        stage('Install Lib stage') {
+            steps {
+                sh 'npm i'
+            }
+        }
+        stage('Test stage') {
+            steps {
+                sh 'npm test'
+            }
+        }
         stage('Build stage') {
             steps{
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":latest"
                 }
             }
         }
@@ -44,16 +44,11 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-        stage('Run Docker Image 2') {
-            steps{
-                sh "docker run -d -p 8080:8080 cuongnm3061997/todo_list_jenkins:$BUILD_NUMBER"
-            }
-        }
-        stage('Remove Unused Docker Image') {
-            steps{
-                sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-        }
+        // stage('Remove Unused Docker Image') {
+        //     steps{
+        //         sh "docker rmi $registry:$BUILD_NUMBER"
+        //     }
+        // }
         // stage('Check Project stage') {
         //     steps{
         //         withSonarQubeEnv('nodejs_demo') { sh "${scannerHome}/bin/sonar-scanner"
