@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Install Lib stage') {
             steps {
-                sh 'npm i'
+                sh 'npm install'
             }
         }
         stage('Test stage') {
