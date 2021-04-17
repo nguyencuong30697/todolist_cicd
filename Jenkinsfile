@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "cuongnm3061997/todo_list_jenkins"
-        registryCredential = "docker-keys"
+        registryCredential = "docker-key-hub"
         dockerImage = ''
         // scannerHome = tool 'sonarscan'
     }
@@ -10,6 +10,16 @@ pipeline {
         stage('Clone stage') {
             steps {
                 git branch: 'master', url: 'https://github.com/nguyencuong30697/todolist_cicd.git'
+            }
+        }
+        stage('Install Lib stage') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Test stage') {
+            steps {
+                sh 'npm test'
             }
         }
         stage('Build stage') {
@@ -31,6 +41,11 @@ pipeline {
         stage('Run Docker Image') {
             steps{
                 sh "docker run --rm -p 8080:8080 $registry:$BUILD_NUMBER"
+            }
+        }
+        stage('Remove Unused Docker Image') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
         // stage('Check Project stage') {
@@ -74,5 +89,14 @@ pipeline {
         //         sh "docker rmi $registry:$BUILD_NUMBER"
         //     }
         // }
+    }
+     post {
+        always {
+            junit 'test.xml'
+            emailext body: '${DEFAULT_CONTENT}', subject: '${DEFAULT_SUBJECT}', to: 'nguyencuong.3061997@gmail.com'
+        }
+        success {
+            echo 'I succeeded!'
+        }
     }
 }
