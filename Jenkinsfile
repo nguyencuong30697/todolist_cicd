@@ -39,9 +39,14 @@ pipeline {
                 }
             }
         }
-        stage('Run Docker Image') {
+        stage('Run Docker Image 1') {
             steps{
                 sh 'docker-compose up -d'
+            }
+        }
+        stage('Run Docker Image 2') {
+            steps{
+                sh "docker run -d -p 8080:8080 cuongnm3061997/todo_list_jenkins:$BUILD_NUMBER"
             }
         }
         stage('Remove Unused Docker Image') {
