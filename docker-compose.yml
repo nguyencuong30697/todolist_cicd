@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:9.6.21-alpine
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgressql:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  nodejsdemo:
+    depends_on:
+      - db
+    image: nodejsnhe
+    ports:
+      - "8080:8080"
+    restart: always
+
+volumes:
+  postgressql:
