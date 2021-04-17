@@ -5,7 +5,8 @@ pipeline {
         dockerImage = ''
         // scannerHome = tool 'sonarscan'
     }
-    // agent { label 'jendev2' }
+    agent { label 'master' }
+    // agent any
     stages {
         stage('Clone stage') {
             steps {
