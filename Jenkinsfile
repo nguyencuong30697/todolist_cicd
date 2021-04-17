@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "cuongnm3061997/todo_list_jenkins"
-        registryCredential = "docker-key-hub"
+        registryCredential = "docker-123"
         dockerImage = ''
         // scannerHome = tool 'sonarscan'
     }
