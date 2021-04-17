@@ -13,16 +13,16 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/nguyencuong30697/todolist_cicd.git'
             }
         }
-        stage('Install Lib stage') {
-            steps {
-                sh 'npm i'
-            }
-        }
-        stage('Test stage') {
-            steps {
-                sh 'npm test'
-            }
-        }
+        // stage('Install Lib stage') {
+        //     steps {
+        //         sh 'npm i'
+        //     }
+        // }
+        // stage('Test stage') {
+        //     steps {
+        //         sh 'npm test'
+        //     }
+        // }
         stage('Build stage') {
             steps{
                 script {
