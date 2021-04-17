@@ -5,7 +5,7 @@ pipeline {
         dockerImage = ''
         // scannerHome = tool 'sonarscan'
     }
-    agent { label 'jendev2' }
+    // agent { label 'jendev2' }
     stages {
         stage('Clone stage') {
             steps {
@@ -40,7 +40,7 @@ pipeline {
         }
         stage('Run Docker Image') {
             steps{
-                sh "docker run --rm -p 8080:8080 $registry:$BUILD_NUMBER"
+                sh 'docker-compose up -d'
             }
         }
         stage('Remove Unused Docker Image') {
