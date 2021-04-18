@@ -3,7 +3,7 @@ pipeline {
         registry = "cuongnm3061997/todo_list_jenkins"
         registryCredential = "docker-123"
         dockerImage = ''
-        // scannerHome = tool 'sonarscan'
+        scannerHome = tool 'sonarscan'
     }
     agent { label 'dev' } 
     // agent any
@@ -21,6 +21,17 @@ pipeline {
         stage('Test stage') {
             steps {
                 sh 'npm test'
+            }
+        }
+        stage('Check Project stage') {
+            steps{
+                withSonarQubeEnv('sonarserver') { sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+        stage('waitForQualityGate stage') {
+            steps{
+                waitForQualityGate abortPipeline: true
             }
         }
         stage('Build stage') {
@@ -47,17 +58,6 @@ pipeline {
         // stage('Remove Unused Docker Image') {
         //     steps{
         //         sh "docker rmi $registry:$BUILD_NUMBER"
-        //     }
-        // }
-        // stage('Check Project stage') {
-        //     steps{
-        //         withSonarQubeEnv('nodejs_demo') { sh "${scannerHome}/bin/sonar-scanner"
-        //         }
-        //     }
-        // }
-        // stage('waitForQualityGate stage') {
-        //     steps{
-        //         waitForQualityGate abortPipeline: true
         //     }
         // }
         // stage('Build stage') {
