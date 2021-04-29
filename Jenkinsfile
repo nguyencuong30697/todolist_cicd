@@ -23,12 +23,12 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Check Project stage') {
-            steps{
-                withSonarQubeEnv('sonarserver') { sh "${scannerHome}/bin/sonar-scanner"
-                }
-            }
-        }
+        // stage('Check Project stage') {
+        //     steps{
+        //         withSonarQubeEnv('sonarserver') { sh "${scannerHome}/bin/sonar-scanner"
+        //         }
+        //     }
+        // }
         stage('waitForQualityGate stage') {
             steps{
                 waitForQualityGate abortPipeline: true
