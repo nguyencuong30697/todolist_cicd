@@ -29,11 +29,11 @@ pipeline {
         //         }
         //     }
         // }
-        stage('waitForQualityGate stage') {
-            steps{
-                waitForQualityGate abortPipeline: true
-            }
-        }
+        // stage('waitForQualityGate stage') {
+        //     steps{
+        //         waitForQualityGate abortPipeline: true
+        //     }
+        // }
         stage('Build stage') {
             steps{
                 script {
